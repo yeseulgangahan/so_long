@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 21:24:07 by dha               #+#    #+#             */
-/*   Updated: 2022/06/08 16:49:28 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 07:19:32 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	check_char(t_map *map, char	c)
 {
 	if (c != '0' && c != '1' && c != 'C' && c != 'E' && c != 'P')
-		ft_error_exit("Error\n  Invalid map: must use specified character!!");
+		ft_error_exit("Error\n  Map must be composed of only 5 possible characters..");
 	if (c == 'E')
 		map->cnt_exit++;
 	else if (c == 'P')
@@ -37,20 +37,20 @@ static void	check_map(t_map *map)
 		{
 			if (((line == 0 || line == map->row - 1) && map->map[line][col] != '1')
 				|| ((col == 0 || col == map->column - 1) && map->map[line][col] != '1'))
-				ft_error_exit("Error\n  Invalid map: must be closed by walls..");
+				ft_error_exit("Error\n  Map must be surrounded by walls..");
 			if (col == map->column - 1 && map->map[line][col + 1])
-				ft_error_exit("Error\n  Invalid map: must be rectangular..");
+				ft_error_exit("Error\n  Map must be rectangular..");
 			check_char(map, map->map[line][col]);
 			col++;
 		}
 		line++;
 	}
 	if (map->cnt_exit < 1)
-		ft_error_exit("Error\n  Invalid map: must have at lease 1 exit..");
+		ft_error_exit("Error\n  Map must have at least 1 exit..");
 	if (map->cnt_start != 1)
-		ft_error_exit("Error\n Invalid map: must have 1 player..");
+		ft_error_exit("Error\n Map must have 1 starting position..");
 	if (map->cnt_collectible < 1)
-		ft_error_exit("Error\n Invalid map: must have at lease 1 collectible..");
+		ft_error_exit("Error\n Map must have at least 1 collectible..");
 }
 
 static void	get_map(t_map *map, int fd)
