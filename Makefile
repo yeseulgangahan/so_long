@@ -1,87 +1,36 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/03/01 16:07:45 by dha               #+#    #+#              #
-#    Updated: 2022/06/08 14:40:11 by yehan            ###   ########seoul.kr   #
-#                                                                              #
-# **************************************************************************** #
+NAME		:= so_long
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
-AR = ar rcs
-RM = rm -rf
-NAME = so_long
+FTDIR		:= ./libft
+MLXDIR		:= ./libmlx
 
-LIBFT_DIR = ./libft
-LIBFT_NAME = ft
-LIBFT = $(LIBFT_DIR)/lib$(LIBFT_NAME).a
+CC			:= cc
+CFLAGS		:= -Wall -Wextra -Werror -g
+LIBFLAGS	:= -L $(FTDIR) -lft -L $(MLXDIR) -lmlx
+FRAMEFLAGS	:= -framework OpenGL -framework Appkit
+RM			:= rm -f
 
-MINILIBX_DIR = ./minilibx_mms
-MINILIBX_NAME = mlx
-MINILIBX = libmlx.dylib
+SRCS	:= \
+				main.c \
+				img.c \
+				map.c \
+				changes.c
 
-SRCS = main.c \
-		map.c \
-		img.c \
-		draw.c \
-		move.c
-INCS = solong.h
-OBJ_DIR = ./obj
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+OBJS		= $(SRCS:.c=.o)
 
-all : $(NAME)
+.PHONY:		all clean fclean re
 
-$(NAME) : $(LIBFT) $(MINILIBX) $(OBJS) $(INCS)
-	@$(CC) $(CFLAGS) $(OBJS) \
-		-L $(LIBFT_DIR) -l$(LIBFT_NAME) \
-		-L $(MINILIBX_DIR) -l$(MINILIBX_NAME) \
-		-framework OpenGL -framework Appkit -o $@
-	@printf "💡 Make $(NAME) Done\n"
-	
-clean :
-	@$(RM) $(OBJ_DIR)
-	@echo "🗑 Remove $(NAME)'s OBJs Done"
+all:		$(NAME)
 
-fclean : clean
-	@$(RM) $(NAME)
-	@echo "🗑 Remove $(NAME) Done"
+clean:
+			make clean --directory=$(FTDIR)
+			$(RM) $(OBJS) $(OBJS_BONUS)
 
-wclean : fclean $(LIBFT_NAME)_fclean $(MINILIBX)_fclean
+fclean:		clean
+			make fclean --directory=$(FTDIR)
+			$(RM) $(NAME)
 
-re : fclean all
+re:			fclean all
 
-rr : wclean all
-
-$(OBJ_DIR)/%.o : %.c
-	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -I $(LIBFT_DIR) -c $< -o $@ -g
-
-.PHONY : all clean fclean wclean re rr \
-	$(LIBFT_NAME)_clean $(LIBFT_NAME)_fclean \
-	$(MINILIBX)_clean $(MINILIBX)_fclean
-
-$(LIBFT) :
-	@make -C $(LIBFT_DIR)
-
-$(LIBFT_NAME)_clean :
-	@make -C $(LIBFT_DIR) clean
-
-$(LIBFT_NAME)_fclean :
-	@make -C $(LIBFT_DIR) fclean
-
-$(MINILIBX) :
-	@make -sC $(MINILIBX_DIR)
-	@cp $(MINILIBX_DIR)/$(MINILIBX) .
-	@printf "💡 Make lib$(MINILIBX_NAME) Done\n"
-
-$(MINILIBX)_clean :
-	@echo "🗑 Remove $(MINILIBX)'s OBJs Done"
-	@make -sC $(MINILIBX_DIR) clean
-
-$(MINILIBX)_fclean : $(MINILIBX)_clean
-	@echo "🗑 Remove $(MINILIBX) Done"
-	@$(RM) $(MINILIBX)
+$(NAME):	$(OBJS)
+			make --directory=$(FTDIR)
+			$(CC) $(CFLAGS) $^ $(LIBFLAGS) $(FRAMEFLAGS) -o $@

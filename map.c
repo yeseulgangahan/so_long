@@ -6,59 +6,70 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 21:24:07 by dha               #+#    #+#             */
-/*   Updated: 2022/06/09 07:19:32 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 14:21:42 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-static void	check_char(t_map *map, char	c)
+static void	check_char(t_game *game, int line, int col)
 {
-	if (c != '0' && c != '1' && c != 'C' && c != 'E' && c != 'P')
-		ft_error_exit("Error\n  Map must be composed of only 5 possible characters..");
-	if (c == 'E')
-		map->cnt_exit++;
-	else if (c == 'P')
-		map->cnt_start++;
-	else if (c == 'C')
-		map->cnt_collectible++;
+	char	a;
+
+	a = game->map[line][col];
+	if (a != '0' && a != '1' && a != 'C' && a != 'E' && a != 'P')
+		ft_err_exit("Error\n  Map must be composed of only 5 possible characters..");
+	if (a == 'C')
+		game->collectible_goal++;
+	else if (a == 'E')
+		game->exit++;
+	else if (a == 'P')
+	{
+		game->player++;
+		game->pos[l] = line;
+		game->pos[c] = col;
+	}
 }
 
-static void	check_map(t_map *map)
+static void	check_map(t_game *game)
 {
 	int	col;
 	int	line;
 
 	line = 0;
-	while (line < map->row)
+	while (line < game->line)
 	{
 		col = 0;
-		while (col < map->column)
+		while (col < game->col)
 		{
-			if (((line == 0 || line == map->row - 1) && map->map[line][col] != '1')
-				|| ((col == 0 || col == map->column - 1) && map->map[line][col] != '1'))
-				ft_error_exit("Error\n  Map must be surrounded by walls..");
-			if (col == map->column - 1 && map->map[line][col + 1])
-				ft_error_exit("Error\n  Map must be rectangular..");
-			check_char(map, map->map[line][col]);
+			if (((line == 0 || line == game->line - 1) && game->map[line][col] != '1')
+				|| ((col == 0 || col == game->col - 1) && game->map[line][col] != '1'))
+				ft_err_exit("Error\n  Map must be surrounded by walls..");
+			if (col == game->col - 1 && game->map[line][col + 1])
+				ft_err_exit("Error\n  Map must be rectangular..");
+			check_char(game, line, col);
 			col++;
 		}
 		line++;
 	}
-	if (map->cnt_exit < 1)
-		ft_error_exit("Error\n  Map must have at least 1 exit..");
-	if (map->cnt_start != 1)
-		ft_error_exit("Error\n Map must have 1 starting position..");
-	if (map->cnt_collectible < 1)
-		ft_error_exit("Error\n Map must have at least 1 collectible..");
+	if (game->collectible_goal < 1)
+		ft_err_exit("Error\n Map must have at least 1 collectible..");
+	if (game->exit < 1)
+		ft_err_exit("Error\n  Map must have at least 1 exit..");
+	if (game->player != 1)
+		ft_err_exit("Error\n Map must have 1 starting position..");
 }
 
-static void	get_map(t_map *map, int fd)
+static void	get_map(t_game *game, char *filename)
 {
+	int		fd;
 	char	*line;
 	char	*lines;
 	char	*temp;
 
+	fd = open(filename, O_RDONLY);
+	if (fd < 2)
+		ft_err_exit("Error\n  open() failed..");
 	line = NULL;
 	lines = NULL;
 	while (1)
@@ -71,38 +82,20 @@ static void	get_map(t_map *map, int fd)
 		free(line);
 		free(temp);
 	}
-	map->map = ft_split(lines, '\n');
+	game->map = ft_split(lines, '\n');
 	free(lines);
 	close(fd);
 }
 
-void	map_init(t_map *map, int fd)
+void	map_init(t_game *game, char *filename)
 {
 	int	i;
 
-	get_map(map, fd);
-	map->column = ft_strlen(map->map[0]);
+	get_map(game, filename);
+	game->col = ft_strlen(game->map[0]);
 	i = 0;
-	while (map->map[i])
+	while (game->map[i])
 		i++;
-	map->row = i;
-	map->cnt_collectible = 0;
-	map->cnt_exit = 0;
-	map->cnt_start = 0;
-	check_map(map);
-}
-
-void	game_init(t_game *game, char *map_file)
-{
-	t_map	map;
-	int		fd;
-
-	fd = open(map_file, O_RDONLY);
-	if (fd < 2)
-		ft_error_exit("Error\n  open(): Failed..");
-	map_init(&map, fd);
-	game->init = 0;
-	game->map = map;
-	game->width = map.column * GAME_BIT;
-	game->height = map.row * GAME_BIT;
+	game->line = i;
+	check_map(game);
 }

@@ -6,50 +6,52 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 16:03:29 by dha               #+#    #+#             */
-/*   Updated: 2022/06/08 16:53:15 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 14:21:54 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-void	end_game(t_game *game)
+void	game_init(t_game *game, char *filename)
 {
-	mlx_destroy_window(game->mlx, game->win);
-	exit(EXIT_SUCCESS);
+	map_init(game, filename);
+	game->mlx_ptr = mlx_init();
+	game->win_ptr = mlx_new_window(game->mlx_ptr, 
+		game->line * GAME_BIT, game->col * GAME_BIT, "yehan's so_long");
+	xpm_file_to_image(game);
+	put_image_to_window_all(game);
 }
 
-int	destory_hook(void *param)
+int	exit_game(t_game *game)
 {
-	end_game((t_game *) param);
-	return (0);
+	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+	exit(EXIT_SUCCESS);
 }
 
 int	key_hook(int keycode, void *param)
 {
 	if (keycode == ESC)
-		end_game((t_game *) param);
+		exit_game((t_game *)param);
 	else if (keycode == W)
-		move(0, (t_game *) param);
+		change_map(0, (t_game *)param);
 	else if (keycode == A)
-		move(1, (t_game *) param);
+		change_map(1, (t_game *)param);
 	else if (keycode == S)
-		move(2, (t_game *) param);
+		change_map(2, (t_game *)param);
 	else if (keycode == D)
-		move(3, (t_game *) param);
+		change_map(3, (t_game *)param);
 	return (0);
 }
 
 int	main(int argc, char **argv)
 {
-	t_game	game;
+	t_game	*game;
 
-	if (argc != 2
-		|| ft_strncmp(".ber", ft_strrchr(argv[1], '.'), 5) || ft_strlen(argv[1]) < 5)
-		ft_error_exit("Error\n  Wrong format: should be like [./so_long map.ber]");
-	game_init(&game, argv[1]);
-	init_img(&game);
-	draw_map(&game);
-	mlx_key_hook(game.win, key_hook, &game);
-	mlx_hook(game.win, 17, 0, destory_hook, &game);
-	mlx_loop(game.mlx);
+	if (argc != 2)
+		ft_err_exit("Error\n  Argument must be like [map.ber]..");
+	game = ft_calloc(1, sizeof(t_game));
+	game_init(game, argv[1]);
+	mlx_hook(game->win_ptr, X_EVENT_KEY_PRESS, 0, &key_hook, game);
+	mlx_hook(game->win_ptr, X_EVENT_KEY_EXIT, 0, &exit_game, game);
+	mlx_loop(game->mlx_ptr);
 }

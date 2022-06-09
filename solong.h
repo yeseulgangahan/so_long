@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 16:03:50 by dha               #+#    #+#             */
-/*   Updated: 2022/06/08 16:14:15 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 14:22:19 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,63 +16,58 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <mlx.h>
-# include "./libft/libft.h"
+# include "./libft/include/libft.h"
+# include "./libft/include/get_next_line.h"
 
-# define SCR_COLOR 0xABCDEF
-# define GAME_BIT 64
 # define ESC 53
 # define A 0
 # define S 1
 # define D 2
 # define W 13
 
-typedef struct s_coord
-{
-	int	x;
-	int	y;
-}				t_coord;
+# define GAME_BIT 64
 
-typedef struct s_data
-{
-	void	*img;
-	int		*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+# define X_EVENT_KEY_PRESS 2
+# define X_EVENT_KEY_EXIT 17
 
-typedef struct s_map
-{
-	char	**map;
-	int		row;
-	int		column;
-	int		cnt_exit;
-	int		cnt_collectible;
-	int		cnt_start;
-}				t_map;
+# define l 0
+# define c 1
+
+typedef struct s_img {
+	void	*empty;
+	void	*wall;
+	void	*collectible;
+	void	*exit;
+	void	*player;
+}	t_img;
 
 typedef struct s_game
 {
-	void	*mlx;
-	void	*win;
-	t_map	map;
-	int		init;
-	int		width;
-	int		height;
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_img	*img;
+	char	**map;
+	int		line;
+	int		col;
+	int		collectible_goal;
+	int		collectible_done;
+	int		player;
+	int		exit;
+	int		pos[2];
 	int		movement;
-	int		collected;
-	t_data	scr;
-	t_data	wall;
-	t_data	exit;
-	t_data	collectible;
-	t_data	character;
-	t_coord	position;
-}				t_game;
+}	t_game;
 
-void	game_init(t_game *game, char *map_file);
-void	init_img(t_game *game);
-void	draw_map(t_game *game);
-void	move(int dir, t_game *game);
-void	end_game(t_game *game);
+/* main.c */
+int	exit_game(t_game *game);
+
+/* img.c */
+void	xpm_file_to_image(t_game *game);
+void	put_image_to_window_all(t_game *game);
+
+/* changes.c */
+void	change_map(int key, t_game *game);
+
+/* map.c */
+void	map_init(t_game *game, char *filename);
 
 #endif
