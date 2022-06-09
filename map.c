@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/01 21:24:07 by dha               #+#    #+#             */
-/*   Updated: 2022/06/09 14:21:42 by yehan            ###   ########seoul.kr  */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "solong.h"
 
 static void	check_char(t_game *game, int line, int col)
@@ -20,7 +8,7 @@ static void	check_char(t_game *game, int line, int col)
 	if (a != '0' && a != '1' && a != 'C' && a != 'E' && a != 'P')
 		ft_err_exit("Error\n  Map must be composed of only 5 possible characters..");
 	if (a == 'C')
-		game->collectible_goal++;
+		game->collectible++;
 	else if (a == 'E')
 		game->exit++;
 	else if (a == 'P')
@@ -52,7 +40,7 @@ static void	check_map(t_game *game)
 		}
 		line++;
 	}
-	if (game->collectible_goal < 1)
+	if (game->collectible < 1)
 		ft_err_exit("Error\n Map must have at least 1 collectible..");
 	if (game->exit < 1)
 		ft_err_exit("Error\n  Map must have at least 1 exit..");

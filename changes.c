@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:41:04 by dha               #+#    #+#             */
-/*   Updated: 2022/06/09 13:57:02 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 16:59:48 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	move_player(t_game *game, int newline, int newcol)
 
 void	change_map(int key, t_game *game)
 {
-	int	col[4] = {-1, 0, 1, 0};
-	int	line[4] = {0, -1, 0, 1};
+	int	line[4] = {-1, 0, 1, 0};
+	int	col[4] = {0, -1, 0, 1};
 	int	newline;
 	int	newcol;
 	int	newpos;
@@ -33,17 +33,16 @@ void	change_map(int key, t_game *game)
 	newline = game->pos[l] + line[key];
 	newcol = game->pos[c] + col[key];
 	newpos = game->map[newcol][newline];
-	if (newpos == '1'
-		|| (newpos == 'E' && game->collectible_done != game->collectible_goal))
+	if (newpos == '1' || (newpos == 'E' && !game->collectible))
 		return ;
-	if (newpos == 'E' && game->collectible_done == game->collectible_goal)
+	if (newpos == 'E')
 	{
 		move_player(game, newline, newcol);
 		put_image_to_window_all(game);
 		exit_game(game);
 	}
 	if (newpos == 'C')
-		game->collectible_done += 1;
+		game->collectible -= 1;
 	move_player(game, newline, newcol);
 	put_image_to_window_all(game);
 }

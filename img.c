@@ -5,6 +5,7 @@ void	xpm_file_to_image(t_game *game)
 	int		wid;
 	int		hei;
 
+	game->img = ft_calloc(1, sizeof(t_img));
 	game->img->empty 
 		= mlx_xpm_file_to_image(game->mlx_ptr, "./imgs/empty.xpm", &wid, &hei);
 	game->img->wall 

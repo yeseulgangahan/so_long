@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 16:03:29 by dha               #+#    #+#             */
-/*   Updated: 2022/06/09 14:21:54 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 15:56:13 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	game_init(t_game *game, char *filename)
 	map_init(game, filename);
 	game->mlx_ptr = mlx_init();
 	game->win_ptr = mlx_new_window(game->mlx_ptr, 
-		game->line * GAME_BIT, game->col * GAME_BIT, "yehan's so_long");
+		game->col * GAME_BIT, game->line * GAME_BIT, "so_long");
 	xpm_file_to_image(game);
 	put_image_to_window_all(game);
 }
