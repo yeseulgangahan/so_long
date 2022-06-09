@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solong.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: han-yeseul <han-yeseul@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 16:03:50 by dha               #+#    #+#             */
-/*   Updated: 2022/06/09 16:57:00 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 19:04:20 by han-yeseul       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ typedef struct s_game
 	void	*win_ptr;
 	t_img	*img;
 	char	**map;
-	int		line;
-	int		col;
+	int		map_line;
+	int		map_col;
+	int		player_pos[2];
 	int		collectible;
 	int		exit;
 	int		player;
-	int		pos[2];
 	int		movement;
 }	t_game;
 

@@ -14,8 +14,8 @@ static void	check_char(t_game *game, int line, int col)
 	else if (a == 'P')
 	{
 		game->player++;
-		game->pos[l] = line;
-		game->pos[c] = col;
+		game->player_pos[l] = line;
+		game->player_pos[c] = col;
 	}
 }
 
@@ -25,15 +25,15 @@ static void	check_map(t_game *game)
 	int	line;
 
 	line = 0;
-	while (line < game->line)
+	while (line < game->map_line)
 	{
 		col = 0;
-		while (col < game->col)
+		while (col < game->map_col)
 		{
-			if (((line == 0 || line == game->line - 1) && game->map[line][col] != '1')
-				|| ((col == 0 || col == game->col - 1) && game->map[line][col] != '1'))
+			if (((line == 0 || line == game->map_line - 1) && game->map[line][col] != '1')
+				|| ((col == 0 || col == game->map_col - 1) && game->map[line][col] != '1'))
 				ft_err_exit("Error\n  Map must be surrounded by walls..");
-			if (col == game->col - 1 && game->map[line][col + 1])
+			if (col == game->map_col - 1 && game->map[line][col + 1])
 				ft_err_exit("Error\n  Map must be rectangular..");
 			check_char(game, line, col);
 			col++;
@@ -80,10 +80,10 @@ void	map_init(t_game *game, char *filename)
 	int	i;
 
 	get_map(game, filename);
-	game->col = ft_strlen(game->map[0]);
+	game->map_col = ft_strlen(game->map[0]);
 	i = 0;
 	while (game->map[i])
 		i++;
-	game->line = i;
+	game->map_line = i;
 	check_map(game);
 }

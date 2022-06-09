@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: han-yeseul <han-yeseul@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 16:03:29 by dha               #+#    #+#             */
-/*   Updated: 2022/06/09 15:56:13 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 19:00:14 by han-yeseul       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	game_init(t_game *game, char *filename)
 {
 	map_init(game, filename);
 	game->mlx_ptr = mlx_init();
-	game->win_ptr = mlx_new_window(game->mlx_ptr, 
-		game->col * GAME_BIT, game->line * GAME_BIT, "so_long");
+	game->win_ptr = mlx_new_window(game->mlx_ptr,
+		game->map_col * GAME_BIT, game->map_line * GAME_BIT, "so_long");
 	xpm_file_to_image(game);
 	put_image_to_window_all(game);
 }

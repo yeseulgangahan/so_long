@@ -6,15 +6,15 @@ void	xpm_file_to_image(t_game *game)
 	int		hei;
 
 	game->img = ft_calloc(1, sizeof(t_img));
-	game->img->empty 
+	game->img->empty
 		= mlx_xpm_file_to_image(game->mlx_ptr, "./imgs/empty.xpm", &wid, &hei);
-	game->img->wall 
+	game->img->wall
 		= mlx_xpm_file_to_image(game->mlx_ptr, "./imgs/wall.xpm", &wid, &hei);
-	game->img->collectible 
+	game->img->collectible
 		= mlx_xpm_file_to_image(game->mlx_ptr, "./imgs/collectible.xpm", &wid, &hei);
 	game->img->exit
 		= mlx_xpm_file_to_image(game->mlx_ptr, "./imgs/exit.xpm", &wid, &hei);
-	game->img->player 
+	game->img->player
 		= mlx_xpm_file_to_image(game->mlx_ptr, "./imgs/player.xpm", &wid, &hei);
 }
 
@@ -43,10 +43,10 @@ void	put_image_to_window_all(t_game *game)
 	int		col;
 
 	line = 0;
-	while (line < game->line)
+	while (line < game->map_line)
 	{
 		col = 0;
-		while (col < game->col)
+		while (col < game->map_col)
 		{
 			put_image_to_window(game, line, col);
 			col++;

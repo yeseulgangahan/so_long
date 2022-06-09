@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   changes.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: han-yeseul <han-yeseul@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:41:04 by dha               #+#    #+#             */
-/*   Updated: 2022/06/09 16:59:48 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/09 19:01:23 by han-yeseul       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void	move_player(t_game *game, int newline, int newcol)
 {
-	game->map[game->pos[l]][game->pos[c]] = '0';
-	game->pos[l] = newline;
-	game->pos[c] = newcol;
-	game->map[game->pos[l]][game->pos[c]] = 'P';
+	game->map[game->player_pos[l]][game->player_pos[c]] = '0';
+	game->player_pos[l] = newline;
+	game->player_pos[c] = newcol;
+	game->map[game->player_pos[l]][game->player_pos[c]] = 'P';
 	game->movement += 1;
 	printf("your current number of movements: %d\n", game->movement);
 }
@@ -30,8 +30,8 @@ void	change_map(int key, t_game *game)
 	int	newcol;
 	int	newpos;
 
-	newline = game->pos[l] + line[key];
-	newcol = game->pos[c] + col[key];
+	newline = game->player_pos[l] + line[key];
+	newcol = game->player_pos[c] + col[key];
 	newpos = game->map[newcol][newline];
 	if (newpos == '1' || (newpos == 'E' && !game->collectible))
 		return ;
