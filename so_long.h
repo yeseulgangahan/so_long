@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solong.h                                           :+:      :+:    :+:   */
+/*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/01 16:03:50 by dha               #+#    #+#             */
-/*   Updated: 2022/06/09 16:57:00 by yehan            ###   ########seoul.kr  */
+/*   Created: 2022/06/13 15:50:26 by yehan             #+#    #+#             */
+/*   Updated: 2022/06/14 09:34:13 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOLONG_H
-# define SOLONG_H
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
 # include <stdio.h>
 # include <fcntl.h>
@@ -30,22 +30,22 @@
 # define X_EVENT_KEY_PRESS 2
 # define X_EVENT_KEY_EXIT 17
 
-# define l 0
-# define c 1
+# define L 0
+# define C 1
 
-typedef struct s_img {
+typedef struct s_imgs {
 	void	*empty;
 	void	*wall;
 	void	*collectible;
 	void	*exit;
 	void	*player;
-}	t_img;
+}	t_imgs;
 
 typedef struct s_game
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	t_img	*img;
+	t_imgs	*imgs;
 	char	**map;
 	int		line;
 	int		col;
@@ -56,17 +56,16 @@ typedef struct s_game
 	int		movement;
 }	t_game;
 
-/* main.c */
-int	exit_game(t_game *game);
+/* setmap.c */
+void	map_init(t_game *game, char *filename);
 
-/* img.c */
+/* setimg.c */
 void	xpm_file_to_image(t_game *game);
 void	put_image_to_window_all(t_game *game);
 
-/* changes.c */
+/* keypress.c */
+int		exit_game(t_game *game);
+int		key_hook(int keycode, t_game *game);
 void	change_map(int key, t_game *game);
-
-/* map.c */
-void	map_init(t_game *game, char *filename);
 
 #endif
