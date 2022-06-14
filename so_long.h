@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:50:26 by yehan             #+#    #+#             */
-/*   Updated: 2022/06/14 09:34:13 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/14 10:08:37 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ typedef struct s_game
 	char	**map;
 	int		line;
 	int		col;
+	int		pos[2];
 	int		collectible;
 	int		exit;
 	int		player;
-	int		pos[2];
 	int		movement;
 }	t_game;
 
