@@ -6,14 +6,14 @@
 #    By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/13 15:50:12 by yehan             #+#    #+#              #
-#    Updated: 2022/06/15 13:12:31 by yehan            ###   ########seoul.kr   #
+#    Updated: 2022/06/15 16:54:11 by yehan            ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= so_long
 
 FTDIR		:= ./libft
-MLXDIR		:= ./mlx
+MLXDIR		:= ./libmlx
 
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror -g

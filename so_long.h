@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:50:26 by yehan             #+#    #+#             */
-/*   Updated: 2022/06/15 15:05:11 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/15 16:36:33 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <fcntl.h>
 # include <stdbool.h>
 # include <errno.h>
-# include "mlx.h"
+# include "./libmlx/mlx.h"
 # include "./libft/include/libft.h"
 # include "./libft/include/get_next_line.h"
 
