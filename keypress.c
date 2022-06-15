@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:49:38 by yehan             #+#    #+#             */
-/*   Updated: 2022/06/14 09:46:35 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/15 14:52:38 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int	exit_game(t_game *game)
 {
+	mlx_destroy_image(game->mlx_ptr, game->imgs->empty);
+	mlx_destroy_image(game->mlx_ptr, game->imgs->wall);
+	mlx_destroy_image(game->mlx_ptr, game->imgs->collectible);
+	mlx_destroy_image(game->mlx_ptr, game->imgs->exit);
+	mlx_destroy_image(game->mlx_ptr, game->imgs->player);
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	exit(EXIT_SUCCESS);
 }

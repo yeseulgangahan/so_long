@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:49:50 by yehan             #+#    #+#             */
-/*   Updated: 2022/06/14 09:41:10 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/15 15:25:50 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ void	xpm_file_to_image(t_game *game)
 		= mlx_xpm_file_to_image(game->mlx_ptr, "./imgs/empty.xpm", &wid, &hei);
 	game->imgs->wall
 		= mlx_xpm_file_to_image(game->mlx_ptr, "./imgs/wall.xpm", &wid, &hei);
-	game->imgs->collectible
-		= mlx_xpm_file_to_image
+	game->imgs->collectible = mlx_xpm_file_to_image
 		(game->mlx_ptr, "./imgs/collectible.xpm", &wid, &hei);
 	game->imgs->exit
 		= mlx_xpm_file_to_image(game->mlx_ptr, "./imgs/exit.xpm", &wid, &hei);
 	game->imgs->player
 		= mlx_xpm_file_to_image(game->mlx_ptr, "./imgs/player.xpm", &wid, &hei);
-	if (!game->imgs->empty || !game->imgs->wall || !game->imgs->collectible
-		|| !game->imgs->exit || !game->imgs->player)
-		ft_err_exit("Error\n  mlx_xpm_file_to_image() failed..");
+	if (game->imgs->empty == NULL || game->imgs->wall == NULL
+		|| game->imgs->collectible == NULL || game->imgs->exit == NULL
+		|| game->imgs->player == NULL)
+		ft_pstr_exit("Error\n: mlx_xpm_file_to_image() failed..");
 }
 
 static void	put_image_to_window(t_game *game, int line, int col)
@@ -49,7 +49,7 @@ static void	put_image_to_window(t_game *game, int line, int col)
 	else
 		img_ptr = game->imgs->empty;
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
-		img_ptr, col * GAME_BIT, line * GAME_BIT);
+		img_ptr, col * PIXEL, line * PIXEL);
 }
 
 void	put_image_to_window_all(t_game *game)
@@ -58,10 +58,10 @@ void	put_image_to_window_all(t_game *game)
 	int		col;
 
 	line = 0;
-	while (line < game->line)
+	while (line < game->mapsize[L])
 	{
 		col = 0;
-		while (col < game->col)
+		while (col < game->mapsize[C])
 		{
 			put_image_to_window(game, line, col);
 			col++;

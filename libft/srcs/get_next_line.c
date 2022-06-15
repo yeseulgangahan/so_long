@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 20:29:33 by yehan             #+#    #+#             */
-/*   Updated: 2022/06/03 12:37:12 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/15 15:25:08 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,19 @@ char	*get_next_line(int fd)
 
 char	*read_iter(char *s_save, int fd)
 {
-	char		*buf;
-	ssize_t		nread;
-	char		*temp;
-	char		*new;
+	char			*buf;
+	static ssize_t	nread;
+	char			*temp;
+	char			*new;
 
-	buf = malloc(BUFFER_SIZE + 1);
-	if (buf == NULL)
-		return (NULL);
-	nread = 0;
+	buf = ft_calloc(1, BUFFER_SIZE + 1);
 	new = s_save;
 	while (new == NULL || !ft_strchr(new, '\n'))
 	{
 		nread = read(fd, buf, BUFFER_SIZE);
-		if (nread <= 0)
+		if (nread == -1)
+			ft_perror_exit("Error\n");
+		if (nread == 0)
 			break ;
 		buf[nread] = '\0';
 		temp = new;
@@ -80,9 +79,7 @@ char	*get_line(char const *s_save)
 	{
 		len = ft_strchr(s_save, '\0') - s_save;
 	}
-	line = malloc(len + 1);
-	if (line == NULL)
-		return (NULL);
+	line = ft_calloc(1, len + 1);
 	ft_strlcpy(line, s_save, len + 1);
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:50:26 by yehan             #+#    #+#             */
-/*   Updated: 2022/06/14 10:08:37 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/15 15:05:11 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include <stdio.h>
 # include <fcntl.h>
-# include <mlx.h>
+# include <stdbool.h>
+# include <errno.h>
+# include "mlx.h"
 # include "./libft/include/libft.h"
 # include "./libft/include/get_next_line.h"
 
@@ -25,13 +27,17 @@
 # define D 2
 # define W 13
 
-# define GAME_BIT 64
+/* pixel per image */
+# define PIXEL 64
 
-# define X_EVENT_KEY_PRESS 2
-# define X_EVENT_KEY_EXIT 17
+# define KEY_PRESS 2
+# define DESTROY_NOTIFY 17
 
+/*  Used in pos[2] (L: line, C: col) */
 # define L 0
 # define C 1
+
+extern int	errno;
 
 typedef struct s_imgs {
 	void	*empty;
@@ -47,8 +53,7 @@ typedef struct s_game
 	void	*win_ptr;
 	t_imgs	*imgs;
 	char	**map;
-	int		line;
-	int		col;
+	int		mapsize[2];
 	int		pos[2];
 	int		collectible;
 	int		exit;
