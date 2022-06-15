@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:50:01 by yehan             #+#    #+#             */
-/*   Updated: 2022/06/15 16:41:37 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/16 08:27:31 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static void	game_init(t_game *game, char *filename)
 
 int	main(int argc, char **argv)
 {
-	t_game	*game;
+	extern int	errno;
+	t_game		*game;
 
 	if (is_valid_arg(argc, argv[1]) == false)
 		ft_pstr_exit("Error\n: Argument must be like ./so_long *.ber");

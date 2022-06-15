@@ -6,7 +6,7 @@
 /*   By: yehan <yehan@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:50:26 by yehan             #+#    #+#             */
-/*   Updated: 2022/06/15 16:36:33 by yehan            ###   ########seoul.kr  */
+/*   Updated: 2022/06/16 08:27:13 by yehan            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@
 /*  Used in pos[2] (L: line, C: col) */
 # define L 0
 # define C 1
-
-extern int	errno;
 
 typedef struct s_imgs {
 	void	*empty;
